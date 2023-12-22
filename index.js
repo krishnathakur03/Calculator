@@ -5,10 +5,14 @@ const percent = document.getElementById('percentage');
 const pluse_minus = document.getElementById('pluse_minus');
 const ac = document.getElementById('ac');
 const equal = document.getElementById('equal');
-const display = document.getElementById('display');
+
+const upDisplay = document.getElementById('display');
+const display = document.getElementById('main-display');
+const subDisplay = document.getElementById('sub-display');
 
 let ans = 0;
 let operand = '';
+let currFont = 40;
 
 num.forEach((ele)=> {
     ele.addEventListener('click', ()=>{
@@ -20,6 +24,11 @@ num.forEach((ele)=> {
             }
             display.innerText = display.innerText + ele.innerText;
         }
+        if (display.offsetWidth >= upDisplay.offsetWidth -10 && currFont >= 25) {
+            display.style.fontSize = `${currFont - 10}px`;
+            currFont -= 5;
+        }
+        subDisplay.innerText = ans + " " + operand;
     })
 })
 operation.forEach((ele) =>{
@@ -33,6 +42,9 @@ operation.forEach((ele) =>{
             display.innerText = '';
         }
         operand = ele.innerText;
+        subDisplay.innerText = ans + " " + operand;
+        display.style.fontSize = '40px';
+        currFont = 40;
     })
 })
 percent.addEventListener('click', ()=>{
@@ -45,14 +57,21 @@ pluse_minus.addEventListener('click', ()=>{
     display.innerText = display.innerText*(-1);
 })
 equal.addEventListener('click', ()=>{
+    ans = Math.round(13);
     if (operand != '') {
         ans = eval(ans + " " + operand + " " +display.innerText);
     }
     operand = '';
     display.innerText = ans;
+    subDisplay.innerText = "Ans. " + ans;
+    display.style.fontSize = '40px';
+    currFont = 40;
 })
 ac.addEventListener('click', ()=> {
     display.innerText = '';
     ans = 0;
     operand = '';
+    subDisplay.innerText = "";
+    display.style.fontSize = '40px';
+    currFont = 40;
 })
